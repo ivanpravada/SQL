@@ -1,0 +1,75 @@
+1) select model, speed, hd
+from PC
+where price < 500
+
+2) select distinct maker
+from Product
+where type='Printer'
+
+3) select model, ram, screen
+from Laptop
+where price>1000
+
+4) select *
+from Printer
+where color='y'
+
+5) select model, speed, hd
+from PC
+where price < 600 and (cd in ('12x', '24x'))
+
+6) select distinct maker, speed from Product
+join Laptop
+on Product.model=Laptop.model
+where Laptop.hd>=10
+
+7) select distinct PC.model, PC.price from PC 
+join Product on PC.model=Product.model
+where Product.maker='B'
+union
+select distinct Laptop.model, Laptop.price from Laptop 
+join Product on Laptop.model=Product.model
+where Product.maker='B'
+union
+select distinct Printer.model, Printer.price from Printer 
+join Product on Printer.model=Product.model
+where Product.maker='B'
+
+8) select distinct maker from Product
+where type='PC'
+except
+select distinct maker from Product
+where type='Laptop'
+
+9) select distinct Product.maker from Product
+join PC on Product.model=PC.model
+where speed>=450
+
+10) select model, price from Printer
+where price in (select max(price) from Printer)
+
+11) select avg(speed) from PC
+
+12) select avg(speed) from Laptop where price>1000
+
+13) select avg(PC.speed) from PC
+join Product on PC.model=Product.model
+where Product.maker='A'
+
+14) select Ships.class, Ships.name, Classes.country from Ships
+join Classes on Ships.class=Classes.class
+where numGuns>=10
+
+15) select hd from PC
+group by hd
+having count(hd)>=2
+
+16) SELECT DISTINCT A.model AS model_1, B.model AS model_2, A.speed, A.ram
+FROM PC AS A, PC B
+WHERE A.speed = B.speed AND 
+ A.ram = B.ram AND
+ A.model > B.model
+ 
+17) select distinct type, Laptop.model, Laptop.speed from Product, Laptop
+where Laptop.speed < all (select speed from PC) and
+Product.type='laptop'
