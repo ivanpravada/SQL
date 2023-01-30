@@ -73,3 +73,21 @@ WHERE A.speed = B.speed AND
 17) select distinct type, Laptop.model, Laptop.speed from Product, Laptop
 where Laptop.speed < all (select speed from PC) and
 Product.type='laptop'
+
+18) select distinct Product.maker, Printer.price from Product
+join Printer on Product.model=Printer.model
+where Printer.price = (select min(price) from Printer where Printer.color='y')
+and Printer.color='y'
+
+19) select Product.maker, avg(Laptop.screen) from Product
+join Laptop on Product.model=Laptop.model
+group by Product.maker
+
+20) select maker, count(model) as count_model from Product
+where type='PC'
+group by maker
+having count(model) > 2
+
+21) select Product.maker, max(PC.price) from Product
+join PC on Product.model=PC.model
+group by Product.maker
