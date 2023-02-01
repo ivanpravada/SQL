@@ -91,3 +91,31 @@ having count(model) > 2
 21) select Product.maker, max(PC.price) from Product
 join PC on Product.model=PC.model
 group by Product.maker
+
+22) select speed, avg(price) from PC
+where speed > 600
+group by speed
+
+23) select distinct maker from Product
+join PC on Product.model=PC.model
+where speed>=750
+INTERSECT
+select distinct maker from Product
+join Laptop on Product.model=Laptop.model
+where speed>=750
+
+24) select model from
+(
+	select model, price from PC
+	union select model, price from Laptop
+	union select model, price from Printer
+) as m
+where price = 
+(
+select max(price) from
+	(
+	select price from PC
+	union select price from Laptop
+	union select price from Printer
+	) as p
+)
